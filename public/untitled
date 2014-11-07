@@ -1,0 +1,107 @@
+<html>
+<head>
+	<title>Whack-a-Mole by Louis Hawkins</title>
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/mole.css">
+	<script src="/assets/js/jquery.min.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+
+	<!-- JS for this application -->
+	<script>
+	//wait for document to be ready before executing code
+	$('document').ready(function() {
+
+		function positionMole() {
+			//TODO: adjust this math
+			var posx = (Math.random() * ($('#mole-field').width() - 100)).toFixed();
+    		var posy = (Math.random() * ($('#mole-field').height() - 100)).toFixed();
+    		console.log(posx);
+    		console.log(posy);
+			//position each .hole div at a random location within the mole-field
+			$('.hole').css({
+        		'position':'relative',
+        		'left':posx+'px',
+        		'top':posy+'px',
+    		});
+    		$('.hole').removeClass('invisible');
+		}
+
+		function disappearMole() {
+			//make mole disappear when clicked
+			$('.hole').click(function(event) {
+				event.preventDefault();
+				$('.hole').addClass('invisible');
+				clicked = true;
+			});
+			return clicked;
+		}
+
+		var score = 0;
+		var clock = 30; //seconds
+		var clicked = false;
+
+		positionMole();
+		$('#score').html(score); 
+		$('#clock').html(clock);
+
+		var intervalID = setInterval(function () {
+			clock -= 1;
+			$('#clock').html(clock);
+
+			if (clock == 0) {
+				alert('Time\'s Up!');
+				clearInterval(intervalID);
+				clearInterval(intervalMole);
+			}
+		}, 1000);
+
+		var intervalMole = setInterval(function() {
+			positionMole();
+			clicked = disappearMole();
+
+			if(clicked == true) {
+				score = score + 1;
+				clicked = false;
+			}
+			else {
+				score = score;
+			}
+			$('#score').html(score); 
+
+		}, 1500);
+	});
+	</script>
+	<!-- end JS for application -->
+</head>
+<body>
+<div class="container">
+	<div class="row" id="header">
+		<div class="col-md-4">
+			<h1>Whack-a-Mole</h1>
+		</div> <!-- left header column -->
+		<div class="col-md-4">
+			<h3 id="clock"></h3>
+		</div> <!-- middle header column -->
+		<div class="col-md-4">
+			<h3>Score</h3>
+			<h4 id="score"></h4>
+		</div> <!-- right header column -->
+	</div> <!-- header ROW -->
+	<div class="row" id="main">
+		<div class="field" id="mole-field">
+			<div class="hole invisible" id="mole-hole1">
+				<a href="#start">Start</a>
+			</div> 
+		</div> <!-- mole-field DIV -->
+	</div> <!-- main ROW -->
+	<div class="row" id="footer">
+		Footer
+	</div> <!-- footer ROW -->
+</div> <!-- CONTAINER -->
+</body>
+</html>
+
+<!-- 			
+
+-->
