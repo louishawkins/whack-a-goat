@@ -31,6 +31,7 @@ $('document').ready(function() {
 		}
 
 		function doGame() {
+			score = 0;
 			//hide start button behind countdown clock
 			$('#start').css('z-index', '0');
 			//COUNTDOWN CLOCK
@@ -40,6 +41,7 @@ $('document').ready(function() {
 				if (clock == 0) {
 					clearInterval(timerInterval);
 					clearInterval(intervalMole);
+					$('.hole').addClass('invisible');
 					clock = 31;
 					score = 0;
 					ended = true;
@@ -55,18 +57,15 @@ $('document').ready(function() {
 					clicked = false;
 				}
 				renderScore();
-			}, 1000);
+			}, 899);
 			return ended;
 		}
 
 		function startGame() {
-			var game_ended = null;
+			if(ended == false) 
+				doGame();
 
-			if(ended == false) {
-				game_ended = doGame();
-			}
-
-			else {
+			else 
 				$('#start').css('z-index', '100');
             	$('#start').html('Play Again');
             	ended = false;
@@ -74,7 +73,7 @@ $('document').ready(function() {
             	clock = 31;
             	score = 0;
             	$('#start').on("click", startGame);
-			}
+			
 		}
 
 		//Initialize variables, display start button.
