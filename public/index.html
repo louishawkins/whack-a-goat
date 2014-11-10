@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>WHACK-A-GOAT | v. 1.0</title>
@@ -6,88 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" type="text/css" href="/assets/css/mole.css">
 	<script src="/assets/js/jquery.min.js"></script>
-	<script type="text/javascript" src="/assets/js/jquery.countdown.js"></script>
+	<script src="/assets/js/mole.js"></script>
 	<script src="/assets/js/bootstrap.min.js"></script>
-
-	<!-- JS for this application -->
-	<script>
-	//wait for document to be ready before executing code
-	$('document').ready(function() {
-
-		function positionMole() {
-			//TODO: adjust this math
-			var posx = (Math.random() * ($('#mole-field').width() - 100)).toFixed();
-    		var posy = (Math.random() * ($('#mole-field').height() - 100)).toFixed();
-    		console.log(posx);
-    		console.log(posy);
-			//position each .hole div at a random location within the mole-field
-			$('.hole').css({
-        		'position':'relative',
-        		'left':posx+'px',
-        		'top':posy+'px',
-    		});
-    		$('.hole').removeClass('invisible');
-		}
-
-		function disappearMole() {
-			//make mole disappear when clicked
-			$('.hole').click(function(event) {
-				event.preventDefault();
-				$('.hole').addClass('invisible');
-				clicked = true;
-			});
-			return clicked;
-		}
-
-		function renderScore(){ 
-			$('#score').html('Score: ' + score);
-		}
-
-		//Initialize variables, display start button.
-
-		var score = 0;
-		var clock = 30; //seconds
-		var clicked = false;
-		var playGame = false;
-		$('#btnStart').html('<button id="start" class="btn btn-success">Start Game</button>');
-
-		var btnStart = document.getElementById('btnStart');
-		btnStart.addEventListener('click', function () {
-			$('#start').css('z-index', '0');
-			//COUNTDOWN CLOCK
-			$('.countdown.callback').countdown({
-          		date: +(new Date) + 30000,
-          		render: function(data) {
-            	$(this.el).text(this.leadingZeros(data.sec, 2) + " sec");
-          	},
-          	onEnd: function() {
-            	$(this.el).addClass('ended');
-            	clearInterval(intervalMole);
-            	renderScore();
-          		}
-        	}).on("click", function() {
-          	$(this).removeClass('ended').data('countdown').update(+(new Date) + 30000).start();
-        	});
-
-        	// mole code
-
-			var intervalMole = setInterval(function() {
-				positionMole();
-				clicked = disappearMole();
-
-				if(clicked == true) {
-					score++;
-					clicked = false;
-				}
-				else {
-					score = score;
-				}
-
-			}, 1000);
-		});	
-	});
-	</script>
-	<!-- end JS for application -->
 </head>
 <body>
 <div class="container">
@@ -97,7 +18,7 @@
 		</div> <!-- left header column -->
 		<div id="middle" class="col-md-4">
 			<div id="btnStart"></div>
-			<div class="countdown callback"></div>
+			<div class="timer"></div>
 		</div> <!-- middle header column -->
 		<div id="right" class="col-md-4">
 			<div id="score"></div>
@@ -113,14 +34,10 @@
 	<div class="row" id="footer">
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
-			<p id="credit">Designed by Louis Hawkins | 2014</p>
+			<p id="credit">Designed by Louis Hawkins  |  2014</p>
 		</div>
 		<div class="col-md-4"></div>
 	</div> <!-- footer ROW -->
 </div> <!-- CONTAINER -->
 </body>
 </html>
-
-<!-- 			
-
--->
