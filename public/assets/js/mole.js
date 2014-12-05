@@ -2,7 +2,6 @@
 $('document').ready(function() {
 
 		function positionMole() {
-			//TODO: adjust this math
 			var posx = (Math.random() * ($('#mole-field').width() - 150)).toFixed();
     		var posy = (Math.random() * ($('#mole-field').height() - 150)).toFixed();
     		console.log(posx);
@@ -64,7 +63,6 @@ $('document').ready(function() {
 		function startGame() {
 			if(ended == false) 
 				doGame();
-
 			else 
 				$('#start').css('z-index', '100');
             	$('#start').html('Play Again');
@@ -75,7 +73,6 @@ $('document').ready(function() {
             	$('#start').on("click", startGame);
 			
 		}
-
 		//Initialize variables, display start button.
 		var score = 0;
 		var clock = 31; //seconds
